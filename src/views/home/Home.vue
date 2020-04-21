@@ -1,6 +1,7 @@
 <template>
  <div>
    <h2>Home</h2>
+   <svg-icon icon-class="dashboard"></svg-icon>
  </div>
 </template>
 

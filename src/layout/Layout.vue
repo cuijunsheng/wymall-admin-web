@@ -3,8 +3,8 @@
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
     <div class="main-container">
-      <div :class="{'fixed-header':fixedHeader}">
-        <navbar />
+      <div :class="{'fixed-header':isFixed}">
+        <navbar/>
       </div>
       <app-main />
     </div>
@@ -17,6 +17,11 @@
 
   export default {
     name: 'Layout',
+    data(){
+      return {
+        isFixed:true
+      }
+    },
     components: {
       Navbar,
       Sidebar,
@@ -29,9 +34,6 @@
       },
       device() {
         return this.$store.state.app.device
-      },
-      fixedHeader() {
-        return this.$store.state.settings.fixedHeader
       },
       classObj() {
         return {

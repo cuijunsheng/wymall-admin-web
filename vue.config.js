@@ -12,11 +12,12 @@ module.exports = {
         'common': '@/common',
         'components': '@/components',
         'network': '@/network',
+        'store':'@/store',
         'views': '@/views',
       }
     }
   },
- /* chainWebpack(config) {
+  chainWebpack(config) {
     // set svg-sprite-loader
     config.module
       .rule('svg')
@@ -33,5 +34,5 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
-  }*/
+  }
 }

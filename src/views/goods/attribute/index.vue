@@ -1,12 +1,12 @@
 <template>
     <div>
-      <h2>222222222222</h2>
+      <div style="text-align: center"><h1>商品属性</h1></div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "About"
+        name: "index"
     }
 </script>
 

@@ -10,7 +10,7 @@ import Layout from '@/layout/Layout'
 export const constantRoutes = [
   {
     path: '/login',
-    component: () => import('@/views/login/Login'),
+    component: () => import('@/views/login'),
     hidden: true
   },
 
@@ -27,7 +27,7 @@ export const constantRoutes = [
     children: [{
       path: '/home',
       name: 'home',
-      component: () => import('views/home/Home'),
+      component: () => import('views/home'),
       meta: {title: '首页', icon: 'home'}
     }]
   },
@@ -40,13 +40,13 @@ export const constantRoutes = [
     children: [{
       path: 'list',
       name: 'list',
-      component: () => import('views/goods/goods/index'),
+      component: () => import('views/goods'),
       meta: {title: '商品列表', icon: 'goods-list'}
     },
       {
         path: 'add',
         name: 'add',
-        component: () => import('views/goods/goods/add'),
+        component: () => import('views/goods/Add'),
         meta: {title: '添加商品', icon: 'goods-add'}
       },
       {

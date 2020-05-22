@@ -17,6 +17,16 @@
               首页
             </el-dropdown-item>
           </router-link>
+          <span style="display:block;" @click="show = true">
+            <el-dropdown-item>
+              布局设置
+            </el-dropdown-item>
+          </span>
+          <router-link to="/user/center">
+            <el-dropdown-item>
+              个人中心
+            </el-dropdown-item>
+          </router-link>
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">退出</span>
           </el-dropdown-item>
@@ -28,8 +38,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/breadcrumb/Breadcrumb'
-import Hamburger from '@/components/hamburger/Hamburger'
+import Breadcrumb from 'components/Breadcrumb'
+import Hamburger from 'components/Hamburger'
 
 export default {
   components: {

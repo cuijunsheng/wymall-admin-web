@@ -1,70 +1,49 @@
 import router from './router'
 import store from './store'
 import { Message } from 'element-ui'
-import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css' // progress bar style
-import { getToken } from '@/utils/auth' // get token from cookie
+import NProgress from 'nprogress' // progress bar 进度条
+import 'nprogress/nprogress.css' // progress bar style 进度条样式
+import { getToken } from 'common/auth' // get token from cookie 鉴权
 
-NProgress.configure({ showSpinner: false }) // NProgress Configuration
+NProgress.configure({ showSpinner: false }) // NProgress Configuration 进度条配置
 
-const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
+const whiteList = ['/login', '/auth-redirect'] // 不重定向白名单
 
-router.beforeEach(async(to, from, next) => {
-  // start progress bar
+router.beforeEach((to, from, next) => {
   NProgress.start()
-
-  // determine whether the user has logged in
-  const hasToken = getToken()
-
-  if (hasToken) {
+  if (getToken()) {
     if (to.path === '/login') {
-      // if is logged in, redirect to the home page
       next({ path: '/' })
-      NProgress.done()
+      NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
-      // determine whether the user has obtained his permission roles through getInfo
-      const hasRoles = store.getters.roles && store.getters.roles.length > 0
-      if (hasRoles) {
-        next()
+      if (store.getters.roles.length === 0) {
+        store.dispatch('GetInfo').then(res => { // 拉取用户信息
+          let menus=res.data.menus;
+          let username=res.data.username;
+          store.dispatch('GenerateRoutes', { menus,username }).then(() => { // 生成可访问的路由表
+            router.addRoutes(store.getters.addRouters); // 动态添加可访问路由表
+            next({ ...to, replace: true })
+          })
+        }).catch((err) => {
+          store.dispatch('FedLogOut').then(() => {
+            Message.error(err || 'Verification failed, please login again')
+            next({ path: '/' })
+          })
+        })
       } else {
-        try {
-          // get user info
-          // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-          const { roles } = await store.dispatch('user/getInfo')
-
-          // generate accessible routes map based on roles
-          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-
-          // dynamically add accessible routes
-          router.addRoutes(accessRoutes)
-
-          // hack method to ensure that addRoutes is complete
-          // set the replace: true, so the navigation will not leave a history record
-          next({ ...to, replace: true })
-        } catch (error) {
-          // remove token and go to login page to re-login
-          await store.dispatch('user/resetToken')
-          Message.error(error || 'Has Error')
-          next(`/login?redirect=${to.path}`)
-          NProgress.done()
-        }
+        next()
       }
     }
   } else {
-    /* has no token*/
-
     if (whiteList.indexOf(to.path) !== -1) {
-      // in the free login whitelist, go directly
       next()
     } else {
-      // other pages that do not have permission to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`)
+      next('/login')
       NProgress.done()
     }
   }
 })
 
 router.afterEach(() => {
-  // finish progress bar
-  NProgress.done()
+  NProgress.done() // 结束Progress
 })

@@ -1,27 +1,32 @@
 <template>
   <div class="drawer-container">
     <div>
-      <h3 class="drawer-title">{{ $t('settings.title') }}</h3>
+      <h3 class="drawer-title">系统布局设置</h3>
 
       <div class="drawer-item">
-        <span>{{ $t('settings.theme') }}</span>
+        <span>主题颜色</span>
         <theme-picker style="float: right;height: 26px;margin: -3px 8px 0 0;" @change="themeChange" />
       </div>
 
-      <div class="drawer-item">
-        <span>{{ $t('settings.tagsView') }}</span>
+      <!--<div class="drawer-item">
+        <span>显示标签</span>
         <el-switch v-model="tagsView" class="drawer-switch" />
-      </div>
+      </div>-->
 
       <div class="drawer-item">
-        <span>{{ $t('settings.fixedHeader') }}</span>
+        <span>固定头部</span>
         <el-switch v-model="fixedHeader" class="drawer-switch" />
       </div>
 
       <div class="drawer-item">
-        <span>{{ $t('settings.sidebarLogo') }}</span>
+        <span>显示LOGO</span>
         <el-switch v-model="sidebarLogo" class="drawer-switch" />
       </div>
+
+      <!--<div class="drawer-item">
+        <span>菜单UniqueOpened</span>
+        <el-switch v-model="uniqueOpened" class="drawer-switch" />
+      </div>-->
 
     </div>
   </div>
@@ -41,7 +46,7 @@
           return this.$store.state.settings.fixedHeader
         },
         set(val) {
-          this.$store.dispatch('settings/changeSetting', {
+          this.$store.dispatch('changeSetting', {
             key: 'fixedHeader',
             value: val
           })
@@ -52,7 +57,7 @@
           return this.$store.state.settings.tagsView
         },
         set(val) {
-          this.$store.dispatch('settings/changeSetting', {
+          this.$store.dispatch('changeSetting', {
             key: 'tagsView',
             value: val
           })
@@ -63,8 +68,19 @@
           return this.$store.state.settings.sidebarLogo
         },
         set(val) {
-          this.$store.dispatch('settings/changeSetting', {
+          this.$store.dispatch('changeSetting', {
             key: 'sidebarLogo',
+            value: val
+          })
+        }
+      },
+      uniqueOpened: {
+        get() {
+          return this.$store.state.settings.uniqueOpened
+        },
+        set(val) {
+          this.$store.dispatch('changeSetting', {
+            key: 'uniqueOpened',
             value: val
           })
         }
@@ -72,7 +88,7 @@
     },
     methods: {
       themeChange(val) {
-        this.$store.dispatch('settings/changeSetting', {
+        this.$store.dispatch('changeSetting', {
           key: 'theme',
           value: val
         })

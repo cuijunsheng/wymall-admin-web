@@ -12,23 +12,27 @@ export default {
   theme: variables.theme,
 
   /**
-   * @type {boolean} true | false
-   * @description Whether show the settings right-panel
+   * 是否显示设置选项
    */
   showSettings: true,
 
   /**
-   * @type {boolean} true | false
-   * @description Whether need tagsView
+   * 是否显示 tagsView
    */
   tagsView: true,
 
   /**
-   * @type {boolean} true | false
-   * @description Whether fix the header
+   * 是否固定头部
    */
   fixedHeader: true,
-
+  /**
+   * 记住密码状态下的token在Cookie中存储的天数，默认1天
+   */
+  tokenCookieExpires: 1,
+  /**
+   * 记住密码状态下的密码在Cookie中存储的天数，默认1天s
+   */
+  passCookieExpires: 1,
   /**
    * 是否显示侧边栏logo
    */

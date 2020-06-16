@@ -46,10 +46,10 @@ export default {
   /**
    * 底部文字，支持html语法
    */
-  footerTxt: '© 2019 Zheng Jie <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License 2.0</a>',
+  footerTxt: '© 2020 Cui JunSheng <a href="https://github.com/cuijunsheng" target="_blank">缺哥的github</a>',
 
   /**
    * 备案号
    */
-  caseNumber: '浙ICP备18005431号'
+  caseNumber: '仙宫99999号'
 }

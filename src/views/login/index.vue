@@ -40,11 +40,11 @@
       </el-form-item>
     </el-form>
     <!--  底部  -->
-    <!--<div v-if="$store.state.settings.showFooter" id="el-login-footer">
+    <div v-if="$store.state.settings.showFooter" id="el-login-footer">
       <span v-html="$store.state.settings.footerTxt"/>
       <span> ⋅ </span>
       <a href="http://www.beian.miit.gov.cn" target="_blank">{{ $store.state.settings.caseNumber }}</a>
-    </div>-->
+    </div>
   </div>
 </template>
 
@@ -159,7 +159,7 @@
   }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style rel="stylesheet/scss" lang="scss" >
   .login {
     display: flex;
     justify-content: center;

@@ -207,7 +207,7 @@
         console.log(index, row);
       },
       handleFactoryStatusChange(index, row) {
-        var data = new URLSearchParams();
+        let data = new URLSearchParams();
         data.append("ids", row.id);
         data.append("factoryStatus", row.factoryStatus);
         updateFactoryStatus(data).then(response => {
@@ -226,7 +226,6 @@
       },
       handleShowStatusChange(index, row) {
         let data = new URLSearchParams();
-        ;
         data.append("ids", row.id);
         data.append("showStatus", row.showStatus);
         updateShowStatus(data).then(response => {
@@ -296,7 +295,7 @@
         });
       },
       addBrand() {
-        this.$router.push({path: '/pms/addBrand'})
+        this.$router.push({path: '/product/addBrand'})
       }
     }
   }

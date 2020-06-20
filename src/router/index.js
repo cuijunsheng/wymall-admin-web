@@ -30,10 +30,8 @@ export const constantRouterMap = [
       component: () => import('views/home'),
       meta: {title: '首页', icon: 'home'}
     }]
-  },
+  }
 
-  // 404 page must be placed at the end !!!
-  {path: '*', redirect: '/404', hidden: true}
 ]
 
 export const asyncRouterMap = [
@@ -41,37 +39,44 @@ export const asyncRouterMap = [
     path: '/product',
     component: Layout,
     name: 'product',
-    redirect: '/product/product',
+    redirect: '/product/list',
     meta: {title: '商品', icon: 'product'},
     children: [{
-      path: 'product',
-      name: 'product',
+      path: 'list',
+      name: 'list',
       component: () => import('views/product'),
       meta: {title: '商品列表', icon: 'product-list'}
     },
       {
         path: 'addProduct',
         name: 'addProduct',
-        component: () => import('views/product/Add'),
+        component: () => import('views/product/AddProduct'),
         meta: {title: '添加商品', icon: 'product-add'}
       },
       {
         path: 'category',
         name: 'category',
-        component: () => import('views/product/category/index'),
+        component: () => import('views/product/category'),
         meta: {title: '商品分类', icon: 'product-category'}
       },
       {
         path: 'attribute',
         name: 'attribute',
-        component: () => import('views/product/attribute/index'),
+        component: () => import('views/product/attribute'),
         meta: {title: '商品属性', icon: 'product-attribute'}
       },
       {
         path: 'brand',
         name: 'brand',
-        component: () => import('views/product/brand/index'),
+        component: () => import('views/product/brand'),
         meta: {title: '品牌管理', icon: 'product-brand'}
+      },
+      {
+        path: 'addBrand',
+        name: 'addBrand',
+        component: () => import('views/product/brand/AddBrand'),
+        meta: {title: '添加品牌'},
+        hidden: true
       },
     ]
   },

@@ -4,8 +4,9 @@
       :action="useOss?ossUploadUrl:minioUploadUrl"
       :data="useOss?dataObj:null"
       list-type="picture"
-      :multiple="false" :show-file-list="showFileList"
+      :multiple="false"
       :file-list="fileList"
+      :show-file-list="showFileList"
       :before-upload="beforeUpload"
       :on-remove="handleRemove"
       :on-success="handleUploadSuccess"
@@ -45,7 +46,7 @@
       },
       showFileList: {
         get: function () {
-          return this.value !== null && this.value !== ''&& this.value!==undefined;
+          return this.value !== null && this.value !== '' && this.value !== undefined;
         },
         set: function (newValue) {
         }
@@ -57,15 +58,15 @@
           policy: '',
           signature: '',
           key: '',
-          ossaccessKeyId: '',
+          ossAccessKeyId: '',
           dir: '',
           host: '',
-          // callback:'',
+          //callback:'',
         },
         dialogVisible: false,
-        useOss:true, //使用oss->true;使用MinIO->false
-        ossUploadUrl:'http://macro-oss.oss-cn-shenzhen.aliyuncs.com',
-        minioUploadUrl:'http://localhost:8080/minio/upload',
+        useOss: true, //使用oss->true;使用MinIO->false
+        ossUploadUrl: 'http://xiaoque-oss.oss-cn-shanghai.aliyuncs.com',
+        minioUploadUrl: 'http://localhost:8080/minio/upload',
       };
     },
     methods: {
@@ -79,8 +80,12 @@
         this.dialogVisible = true;
       },
       beforeUpload(file) {
+        if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+          this.$message.error("只能上传jpg/png文件");
+          return false;
+        }
         let _self = this;
-        if(!this.useOss){
+        if (!this.useOss) {
           //不使用oss不需要获取策略
           return true;
         }
@@ -88,11 +93,11 @@
           policy().then(response => {
             _self.dataObj.policy = response.data.policy;
             _self.dataObj.signature = response.data.signature;
-            _self.dataObj.ossaccessKeyId = response.data.accessKeyId;
+            _self.dataObj.ossAccessKeyId = response.data.accessKeyId;
             _self.dataObj.key = response.data.dir + '/${filename}';
             _self.dataObj.dir = response.data.dir;
             _self.dataObj.host = response.data.host;
-            // _self.dataObj.callback = response.data.callback;
+            //_self.dataObj.callback = response.data.callback;
             resolve(true)
           }).catch(err => {
             console.log(err)
@@ -104,7 +109,7 @@
         this.showFileList = true;
         this.fileList.pop();
         let url = this.dataObj.host + '/' + this.dataObj.dir + '/' + file.name;
-        if(!this.useOss){
+        if (!this.useOss) {
           //不使用oss直接获取图片路径
           url = res.data.url;
         }

@@ -13,9 +13,9 @@
         </el-button>
       </div>
       <div style="margin-top: 15px">
-        <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
+        <el-form :inline="true" :model="listQuery" size="small" @submit.native.prevent label-width="140px" >
           <el-form-item label="输入搜索：">
-            <el-input style="width: 203px" v-model="listQuery.keyword" placeholder="品牌名称/关键字"></el-input>
+            <el-input style="width: 203px" v-model="listQuery.keyword" placeholder="品牌名称/关键字" @keyup.enter.native="searchBrandList()" clearable></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -136,7 +136,7 @@
   </div>
 </template>
 <script>
-  import {fetchList, updateShowStatus, updateFactoryStatus, deleteBrand} from '@/api/brand'
+  import {fetchList, updateShowStatus, updateFactoryStatus, deleteBrand} from 'api/brand'
 
   export default {
     name: 'brandList',
@@ -156,7 +156,7 @@
         listQuery: {
           keyword: null,
           pageNum: 1,
-          pageSize: 10
+          pageSize: 5
         },
         list: null,
         total: null,
@@ -171,6 +171,7 @@
       getList() {
         this.listLoading = true;
         fetchList(this.listQuery).then(response => {
+          console.log(response);
           this.listLoading = false;
           this.list = response.data.list;
           this.total = response.data.total;
@@ -255,7 +256,7 @@
         this.listQuery.pageNum = 1;
         this.getList();
       },
-      handleBatchOperate() {
+      handleBatchOperate: function () {
         console.log(this.multipleSelection);
         if (this.multipleSelection < 1) {
           this.$message({
@@ -301,7 +302,6 @@
   }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
-
 
 </style>
 

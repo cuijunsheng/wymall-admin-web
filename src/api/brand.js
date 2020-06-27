@@ -1,7 +1,7 @@
 import request from '@/common/request'
 export function fetchList(params) {
   return request({
-    url:'/brand/queryBrandList',
+    url:'/brand/pageBrandList',
     method:'get',
     params:params
   })
@@ -15,7 +15,7 @@ export function createBrand(data) {
 }
 export function updateShowStatus(data) {
   return request({
-    url:'/brand/update/showStatus',
+    url:'/brand/updateShowStatus',
     method:'post',
     data:data
   })
@@ -23,7 +23,7 @@ export function updateShowStatus(data) {
 
 export function updateFactoryStatus(data) {
   return request({
-    url:'/brand/update/factoryStatus',
+    url:'/brand/updateFactoryStatus',
     method:'post',
     data:data
   })
